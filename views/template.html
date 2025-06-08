@@ -1,0 +1,175 @@
+<html lang="en">
+    <head>
+        <title>GrimFilerino Blog</title>
+        <link rel="stylesheet" href="/less-css/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <base url="https://grimfilerino.com/">
+        <meta charset="UTF-8">   
+        <meta name="description" content="Grimfilerino portfolio">
+        <meta name="author" content="Grimfilerino">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="Blog, Code, Developer, Typescript, Javascript, C, Funbutler, MongoDB, GOLang">
+    </head>
+    <body>
+        <header>
+            <div class="row">
+                <div class="align-center col-1">
+                    <a class="header-title grimfilerino" href="/">GrimFilerino</a>
+                </div>
+
+                <div class="col-10"></div>
+
+                <div class="align-center col-1">
+                    <a class="header-title" href="https://grimfilerino.com">Portfolio</a>
+                </div>
+            </div>
+        </header>
+        
+        <div class="aside-toggle" id="aside-toggle">
+            <i class="fa fa-bars"></i>
+        </div>
+
+        <div class="overlay-aside" id="overlay-aside"></div>
+
+        <aside>
+            <div class="container" id="blog-list-aside">
+                <div class="section-content row">
+                    <p class="col-12">Very empty and right now.</p> 
+                </div>
+            </div>
+        </aside>
+
+        {{body}}
+
+    </body>
+
+    <script>
+        (async () => {
+            let blogs = [];
+            let categories = [];
+
+            let currentPage = "";
+            try {
+                let res = await fetch("/blogs");
+                blogs = await res.json();
+            } catch(err) {
+                console.log(err);
+            }
+
+            try {
+                let res = await fetch("/categories");
+                categories = await res.json();
+            } catch(err) {
+                console.log(err);
+            }
+            
+            if(window.location.pathname.includes("blogs")){
+                currentPage = window.location.pathname.split("blogs")[1];
+                currentPage = currentPage.replace('/', '');
+
+                if(currentPage.includes("#")) {
+                    currentPage = currentPage.split("#")[0];
+                }
+            }
+
+            console.log(currentPage);
+            
+            
+            if(blogs) {
+                let blogList = document.getElementById("blog-list-aside");
+                
+                
+                if(blogList) {
+                    let html = `<div class="close-btn" id="close-aside">
+                                    <i class="fa fa-close"></i>
+                                </div>
+                                <ul class='category-list'>`;
+                    
+                    for(let category of categories) {
+                        let blogsInSection = blogs.filter((b) => b.category == category.type);
+                        category.isExpanded = !category.isExpanded 
+                            ? blogsInSection.some((b) => b.name == currentPage) : category.isExpanded;
+                             
+                        html += `<li class="category-item ${category.isExpanded ? 'expanded' : ''}" 
+                                    id="${category.type}" >${category.name}`;
+                        
+                        if(blogsInSection.length) {
+                            html += `<ul class='blog-list' id="blog-list">`;
+                            
+                            for(let blog of blogsInSection) {
+                                let underList = ""
+
+                                let isCurrentlViewed = currentPage === blog.name;
+
+                                if(currentPage != "" && isCurrentlViewed) {
+                                    let sections = blog.sections;
+
+                                    if(sections.length) {
+                                        if(blog.listStyle != "number") {
+                                            underList = `<br><ul class='under-list ${blog.listStyle}'>`
+
+                                            for(let section of sections) {
+                                                underList += `<li><a href="#${section.id}">${section.name}</a></li>`
+                                            }
+                                            underList += "</ul>"
+                                        }
+                                        else {
+                                            underList = `<br><ol class='under-list'>`
+
+                                            for(let section of sections) {
+                                                underList += `<li><a href="#${section.id}">${section.name}</a></li>`
+                                            }
+                                            underList += "</ol>"
+                                        }
+                                    }
+                                }
+
+                                html += `<li><a class="${isCurrentlViewed ? 'selected' : ''}" href="/blogs/${blog.name}">${blog.name}</a>${underList}</li>` 
+                            }
+                        }
+                        else {
+                            html += `<br><span>Very empty here right now</span>`
+                        }
+                    }
+                    
+                    html += "</ul>"
+
+                    blogList.innerHTML = html;
+                    
+                    for(let category of categories) {
+                        document.getElementById(`${category.type}`).addEventListener('click', (e) => {
+                            if(e.target.id == category.type) {
+                                toggleCategory(e.target.id);
+                            }
+                        });
+                    }
+
+                    document.getElementById('aside-toggle').addEventListener('click', () => {
+                        blogList.classList.add("enabled");
+                    });
+
+                    document.getElementById('close-aside').addEventListener('click', () => {
+                        blogList.classList.remove("enabled");
+                    });
+
+                    document.getElementById('overlay-aside').addEventListener('click', () => {
+                        if(blogList.classList.contains("enabled")) {
+                            blogList.classList.remove("enabled");
+                        }
+                    });
+
+                    
+                }
+            }
+        })();
+
+        function toggleCategory(id) {
+            let categoryEl = document.getElementById(id);
+            categoryEl.classList.contains("expanded") 
+                ? categoryEl.classList.remove("expanded")
+                : categoryEl.classList.add("expanded");
+
+            console.log("clicked");
+        }
+    </script>
+</html>
