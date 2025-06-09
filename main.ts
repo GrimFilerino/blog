@@ -75,7 +75,7 @@ app.get("/blogs/:blogName", async (req: any, res: any) => {
 });
 
 
-app.listen(8888, () => {
+app.listen(8000, () => {
     console.log("Server is running on http://localhost:8888");
     
     let config = fs.readFileSync(path.join(Deno.cwd(), "blog-config.json"));

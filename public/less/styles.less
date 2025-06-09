@@ -6,6 +6,7 @@
 	--text-color: #fffbe5;
 	--grimfilerino-color: #ff5340;
 	--selected: #72aac6;
+    --visited-link-color: #fc8174;
 }
 
 body {
@@ -33,6 +34,16 @@ span {
     font-size: 12px;
     font-style: italic;
 }
+
+a.text-link {
+    color: var(--grimfilerino-color);
+
+    &:visited {
+       color: var(--visited-link-color); 
+    }
+}
+
+
 
 
 aside {
@@ -180,9 +191,13 @@ footer {
 	text-align: center;
 }
 
-img.align-center {
-    margin: auto;
+img.text-image {
+    &.align-center {
+        margin: auto;
+    }
+    
 }
+
 
 .header-title {
 	display: flex;
