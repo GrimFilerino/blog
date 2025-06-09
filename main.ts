@@ -14,6 +14,9 @@ app.use("/less-css", (req, res, next) => {
     next();
 },expressLess(path.join(Deno.cwd(), "public", "less"), { compress: true }));
 
+app.use("/assets", express.static("./public/assets/", {}));
+
+app.use('/favicon.ico', express.static('./public/assets/favicon.ico'));
 
 app.get("/", (req: any, res: any) => {
     try {
@@ -55,9 +58,7 @@ app.get("/blogs/:blogName", async (req: any, res: any) => {
                         <div class="col-12">
                             <h2>${section.name}</h2>
                         </div>
-                        <div class="col-12">
-                            <p>${section.content}</p>   
-                        </div>
+                        ${section.content}
                     </div>
                 </section>
                 <br>

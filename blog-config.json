@@ -20,17 +20,17 @@
                 { 
                     "name" :"Test", 
                     "id": "test",
-                    "content": "This is my blog. I will be posting my projects here and detailing how I did it and anything else related I guess."
+                    "content": "<div class='col-12'><p>This is my blog. I will be posting my projects here and detailing how I did it and anything else related I guess.</p></div>"
                 },
                 { 
                     "name" :"Test 2", 
                     "id": "test2",
-                    "content": "This is my blog. I will be posting my projects here and detailing how I did it and anything else related I guess."
+                    "content": "<div class='col-12'><p>This is my blog. I will be posting my projects here and detailing how I did it and anything else related I guess.</p></div>"
                 },
                 { 
                     "name" :"Test 3", 
                     "id": "test3",
-                    "content": "This is my blog. I will be posting my projects here and detailing how I did it and anything else related I guess."
+                    "content": "<div class='col-12'><p>This is my blog. I will be posting my projects here and detailing how I did it and anything else related I guess.</p></div>"
                 }
             ]
         }
