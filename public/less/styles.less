@@ -1,9 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Pixelify+Sans:wght@400..700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=SUSE+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
 :root {
 	--header-color: #060606;
 	--body-color: #1c1c1c;
 	--text-color: #fffbe5;
+	--seperator-color: #fffbe525;
 	--grimfilerino-color: #ff5340;
 	--selected: #72aac6;
     --visited-link-color: #fc8174;
@@ -11,7 +12,7 @@
 
 body {
 	background-color: var(--body-color);
-	font-family: "Pixelify Sans", serif !important;
+	font-family: "Google Sans Code", serif !important;
 	min-height: 120vh;
 	height: max-content;
 	width: 100%;
@@ -51,15 +52,17 @@ ul.none {
     list-style: none;
 }
 
+
 aside {
     position: sticky;
     top: 10%;
+    z-index:999999999999999999999999999999999;
 
     .container {
         background-color: var(--body-color);
         position: absolute;
         left: -8px;
-        font-family: "Pixelify Sans", serif !important;
+	    font-family: "Google Sans Code", serif !important;
         min-height: 75vh;
         height: 75vh;
         max-height: 75vh;
@@ -73,7 +76,7 @@ aside {
         border-left: 0;
         border-top-right-radius:5px;
         border-bottom-right-radius:5px;
-        z-index:999;
+        z-index:999999999999999999999999999999999;
 
 
         .close-btn {
@@ -93,18 +96,30 @@ aside {
                     display: none;
                 }
 
-                &:before {
-                    content: '▶';
+                i {
                     position: absolute;
                     left: 15px;
+                    content:"";
+
+                }
+                
+                .ph-caret-line-right{
+                    display: inline-block;
+                }
+
+                .ph-caret-line-down {
+                    display: none;
                 }
                 
                 &.expanded {
-                    &:before {
-                        content: '▼';
-                        position: absolute;
-                        left: 15px;
+                    .ph-caret-line-down {
+                        display: inline-block;
                     }
+                    
+                    .ph-caret-line-right {
+                        display: none;
+                    }
+
 
                     span {
                         display: block;
@@ -162,6 +177,7 @@ footer {
 	color: var(--text-color);
 	display: flex;
 	align-items: self-end;
+    font-size: 12px;
 
 	.row {
 		padding: 0;
@@ -202,6 +218,10 @@ footer {
 	text-align: center;
 }
 
+.last-update {
+    color: var(--text-color);
+}
+
 img.text-image {
 
     &.align-center {
@@ -209,18 +229,28 @@ img.text-image {
     }
 
     &.border {
-        border: 10px solid transparent;
-        border-image: url("/assets/pixelBorder.png") 16;
+        border: 10px solid var(--grimfilerino-color);
+        border-radius: 5px;
+    
     }
     
 }
 
+.logo {
+	width: 32px;
+	height: 32px;
+	align-self: center;
+	padding-right: 10px;
+	padding-left: 10px;
+    border-radius: 100%;
+    transform: translateY(-2px);
+}
 
 .header-title {
 	display: flex;
 	color: var(--text-color);
 	text-decoration: none;
-	font-size: 18px;
+	font-size: 16px;
 	padding: 15px;
 	text-align: center;
 
@@ -240,18 +270,20 @@ img.text-image {
 	padding: 15px;
 
     &:not(&.first){
-        border-top-width: 1px;
+        border-top-width: 2px;
         border-top-style: solid;
-        border-top-color: var(--text-color);
+        border-top-color: var(--seperator-color);
     }
 
 	.section-title {
 		padding: 0;
+        font-size: 14px;
 	}
 
 	.section-content {
 		min-height: 200px;
 		text-align: left;
+        font-size: 12px;
 		padding: 0 !important;
 	}
 

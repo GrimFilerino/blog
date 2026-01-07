@@ -3,7 +3,7 @@
         <title>Grim Blog</title>
         <link rel="stylesheet" href="/less-css/styles.css">
         <link rel="stylesheet" href="/css/keyframes.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
         <base url="https://grimfilerino.com/">
         <meta charset="UTF-8">   
         <meta name="description" content="Grimfilerino portfolio">
@@ -15,7 +15,10 @@
         <header>
             <div class="row">
                 <div class="align-center col-1">
-                    <a class="header-title grimfilerino" href="/">GrimFilerino</a>
+                    <a class="header-title grimfilerino" href="/">
+                        <img class="logo" src="/favicon.ico" alt="My Logo" />
+                        <h2>GrimFilerino</h2>
+                    </a>
                 </div>
 
                 <div class="col-10 align-center">
@@ -52,9 +55,6 @@
         <footer name="footer">
             <div class="row">
                 <div class="col-2 align-left">
-                    <span>Last Updated : 2025-01-18</span>
-                    <br>
-                    <span class="disable-on-mobile">me@grimfilerino.com</span>
                 </div>
                 <div class="col-8">
                     <a style="opacity: 0;" href="/dungeon">Important Link</a>
@@ -128,7 +128,11 @@
                             category.isExpanded = !category.isExpanded 
                                 ? blogsInSection.some((b) => b.name == currentPage) : category.isExpanded;
 
-                            html += `<li class="category-item ${category.isExpanded ? 'expanded' : ''}" id="${category.type}" >${category.name}`;
+                            html += `<li class="category-item ${category.isExpanded ? 'expanded' : ''}" id="${category.type}">
+                                        <i id="${category.type}" class="ph ph-caret-line-right"></i>
+                                        <i id="${category.type}" class="ph ph-caret-line-down"></i>
+                                        ${category.name}
+                                    `;
 
                             if(blogsInSection.length) {
                                 html += `<ul class='blog-list' id="blog-list">`;

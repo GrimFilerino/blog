@@ -10,6 +10,7 @@ export interface IBlog {
     category: CategoryType 
     listStyle: string,
     excluded: boolean,
+    date: string,
     sections: { 
         name : string,
         id: string,
@@ -82,8 +83,6 @@ app.get("/blogs/:blogName", async (req: any, res: any) => {
 
             blogContent += `
                 <section class="section ${index == 0 ? 'first' : ''}" id="${section.id}">
-                    <span class="where-am-i">${category.name}/${blog.name}</span>
-
                     <div class="row"> 
                         <div class="col-12">
                             <h2>${section.name}</h2>
@@ -95,6 +94,10 @@ app.get("/blogs/:blogName", async (req: any, res: any) => {
             `
             index++;
         }
+
+        blogContent += `
+            <div class="row last-update"><div class="col-12 align-center"><span>Last Updated : ${blog.date}</span></div></div>    
+        `
 
         let html = template.replace("{{body}}", blogContent);
 
@@ -120,7 +123,7 @@ app.get("/*path", async (req: any, res: any, next: any) => {
 
 app.listen(8000, () => {
     console.log("Server is running on http://localhost:8000");
-    
+
     try {
         let data: IBlogData = CONFIG;
         blogs = data.blogs;
@@ -131,7 +134,7 @@ app.listen(8000, () => {
     }
 });
 
-const CONFIG = {
+const CONFIG: IBlogData = {
     categories: [ 
         { 
             name: "Development",
@@ -150,6 +153,7 @@ const CONFIG = {
             category: "FOOD",
             listStyle: "dot",
             excluded: true,
+            date: "2025-11-15",
             sections: [
                 { 
                     name :"Test", 
@@ -164,7 +168,12 @@ const CONFIG = {
                 { 
                     name :"Test 3", 
                     id: "test3",
-                    content: "<div class='col-12'><p>This is my blog. I will be posting my projects here and detailing how I did it and anything else related I guess.</p></div>"
+                    content: `
+                        <div class='col-12'>
+                            <img class="col-12 text-image align-center border" src="/assets/hedgehog.jpg" alt="image-of-a-hedgehog">
+                            <p>This is my blog. I will be posting my projects here and detailing how I did it and anything else related I guess.</p>
+                        </div>
+                    `
                 }
             ]
         }
