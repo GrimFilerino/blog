@@ -2,6 +2,11 @@ import express from "npm:express";
 import { join } from "https://deno.land/std/path/mod.ts";
 import expressLess from "npm:express-less";
 import fs from "node:fs"
+import { randomIntegerBetween } from "@std/random";
+import { randomSeeded } from "@std/random";
+
+const prng = randomSeeded(BigInt(crypto.getRandomValues(new Uint32Array(1))[0]!));
+
 
 export type CategoryType = "DEV" | "FOOD";
 
@@ -116,6 +121,9 @@ app.get("/*path", async (req: any, res: any, next: any) => {
         req.path === "/dungeon") {
         
         let html = fs.readFileSync(join(Deno.cwd(), "views", "dungeon.html")).toString();
+        html = html.replace("{rand1}", randomIntegerBetween(1, 999999, { prng }));
+        html = html.replace("{rand2}", randomIntegerBetween(1, 999999, { prng }));
+
         res.send(html).end();
     }
     next();
