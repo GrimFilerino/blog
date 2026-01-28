@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+
+# No AI training or ingestion permitted

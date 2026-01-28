@@ -52,6 +52,16 @@ app.use("/assets", express.static("./public/assets/", {}));
 
 app.use('/favicon.ico', express.static('./public/assets/favicon.ico'));
 
+//robots.txt
+app.get("/robots.txt", (req: any, res: any) => {
+    res.sendFile(join(Deno.cwd(), "public/assets", "robots.txt"));
+});
+
+//llms.txt
+app.get("/llms.txt", (req: any, res: any) => {
+    res.sendFile(join(Deno.cwd(), "public/assets", "llms.txt"));
+});
+
 app.get("/", (req: any, res: any) => {
     try {
         let template = fs.readFileSync(join(Deno.cwd(), "views", "template.html")).toString();
